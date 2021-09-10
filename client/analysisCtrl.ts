@@ -552,7 +552,7 @@ export default class AnalysisController {
                         const availableVariants = this.ffish.variants();
                         //console.log('Available variants:', availableVariants);
                         if (this.model.variant === 'chess' || availableVariants.includes(this.model.variant)) {
-                            this.ffishBoard = new this.ffish.Board(this.variant.name, this.fullfen, this.chess960);
+                            this.ffishBoard = new this.ffish.Board("bughouse", this.fullfen, this.chess960);
                             this.dests = this.getDests();
                             this.chessground.set({ movable: { color: this.turnColor, dests: this.dests } });
                         } else {
@@ -737,7 +737,7 @@ export default class AnalysisController {
             window.fsf.postMessage('setoption name UCI_Chess960 value true');
         }
         if (this.model.variant !== 'chess') {
-            window.fsf.postMessage('setoption name UCI_Variant value ' + this.model.variant);
+            window.fsf.postMessage('setoption name UCI_Variant value ' + 'bughouse');
         }
         //console.log('setoption name Threads value ' + maxThreads);
         window.fsf.postMessage('setoption name Threads value ' + maxThreads);
@@ -1040,21 +1040,21 @@ export default class AnalysisController {
             meta.captured = {role: "p-piece"};
         }
         // increase pocket count
-        if (this.variant.drop && meta.captured) {
-            let role = meta.captured.role
-            if (meta.captured.promoted)
-                role = (this.variant.promotion === 'shogi' || this.variant.promotion === 'kyoto') ? meta.captured.role.slice(1) as Role : "p-piece";
+        //~ if (this.variant.drop && meta.captured) {
+            //~ let role = meta.captured.role
+            //~ if (meta.captured.promoted)
+                //~ role = (this.variant.promotion === 'shogi' || this.variant.promotion === 'kyoto') ? meta.captured.role.slice(1) as Role : "p-piece";
 
-            let position = (this.turnColor === this.mycolor) ? "bottom": "top";
-            if (this.flip) position = (position === "top") ? "bottom" : "top";
-            if (position === "top") {
-                this.pockets[0][role]++;
-                this.vpocket0 = patch(this.vpocket0, pocketView(this, this.turnColor, "top"));
-            } else {
-                this.pockets[1][role]++;
-                this.vpocket1 = patch(this.vpocket1, pocketView(this, this.turnColor, "bottom"));
-            }
-        }
+            //~ let position = (this.turnColor === this.mycolor) ? "bottom": "top";
+            //~ if (this.flip) position = (position === "top") ? "bottom" : "top";
+            //~ if (position === "top") {
+                //~ this.pockets[0][role]++;
+                //~ this.vpocket0 = patch(this.vpocket0, pocketView(this, this.turnColor, "top"));
+            //~ } else {
+                //~ this.pockets[1][role]++;
+                //~ this.vpocket1 = patch(this.vpocket1, pocketView(this, this.turnColor, "bottom"));
+            //~ }
+        //~ }
 
         //  gating elephant/hawk
         if (this.variant.gate) {

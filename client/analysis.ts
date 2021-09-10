@@ -19,6 +19,7 @@ function runGround(vnode: VNode, model) {
     const el = vnode.elm as HTMLElement;
     const ctrl = new AnalysisController(el, model);
     window['onFSFline'] = ctrl.onFSFline;
+    window['ctrl'] = ctrl;
 }
 
 function leftSide(model) {
