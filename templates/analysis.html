@@ -3,6 +3,17 @@
     <div id="placeholder"></div>
 {% endblock %}
 {% block js %}
+
+<!--
+if there is a ?fen= in the url, we use that
+-->
+<script>
+	var searchParams = new URLSearchParams(window.location.search)
+	var fen_in_url = searchParams.get('fen')
+	var default_fen = "Rn1qkbr1/pp2p2p/5n2/2pp1b2/P7/3PPP2/1PP1NN2/RNBQKB1R[Qbbnnppp] w KQ - 0 1"
+	document.body.dataset.fen = ( fen_in_url ) ? fen_in_url : default_fen
+</script>
+
 <script src="{{ js }}"></script>
 <script src="/static/stockfish.js"></script>
 <script>
