@@ -1,62 +1,29 @@
-[![Python-CI](https://github.com/gbtami/pychess-variants/actions/workflows/ci.yml/badge.svg)](https://github.com/gbtami/pychess-variants/actions/workflows/ci.yml)
-[![Nodejs-CI](https://github.com/gbtami/pychess-variants/actions/workflows/nodejs.yml/badge.svg)](https://github.com/gbtami/pychess-variants/actions/workflows/nodejs.yml)
-## PyChess-Variants
+## Online Bughouse Stockfish
 
-PyChess-Variants is a free, open-source chess server designed to play chess variants.
+This project is a modified version of gbtami/pychess-variants analyis board,
+so it can analyse bughouse positions. (I just replaced "crazyhouse" with "bughouse", and removed the part when it puts the taken pieces into hands.)
 
-Currently supported games are:
+It is a toy/POC project, and I don't intend to work on it, fix bugs. 
 
-- [Makruk](https://www.pychess.org/variants/makruk)
-- [Makpong](https://www.pychess.org/variants/makpong)
-- [Ouk Chatrang](https://www.pychess.org/variants/cambodian)
-- [Sittuyin](https://www.pychess.org/variants/sittuyin)
-- [Shogi](https://www.pychess.org/variants/shogi)
-- [Minishogi](https://www.pychess.org/variants/minishogi)
-- [Kyoto shogi](https://www.pychess.org/variants/kyotoshogi)
-- [Dobutsu shogi](https://www.pychess.org/variants/dobutsu)
-- [Goro-Goro shogi](https://www.pychess.org/variants/gorogoro)
-- [Tori Shogi](https://www.pychess.org/variants/torishogi)
-- [Xiangqi](https://www.pychess.org/variants/xiangqi)
-- [Manchu](https://www.pychess.org/variants/manchu)
-- [Janggi](https://www.pychess.org/variants/janggi)
-- [Minixiangqi](https://www.pychess.org/variants/minixiangqi)
-- [Placement chess](https://www.pychess.org/variants/placement)
-- [Crazyhouse](https://www.pychess.org/variants/crazyhouse)
-- [Atomic](https://www.pychess.org/variants/atomic)
-- [S-chess](https://www.pychess.org/variants/seirawan)
-- [Capablanca](https://www.pychess.org/variants/capablanca)
-- [Gothic](https://www.pychess.org/variants/gothic)
-- [Grand](https://www.pychess.org/variants/grand)
-- [Shako](https://www.pychess.org/variants/shako)
-- [Shogun](https://www.pychess.org/variants/shogun)
-- [Orda](https://www.pychess.org/variants/orda)
-- [Synochess](https://www.pychess.org/variants/synochess)
-- [Hoppel-Poppel](https://www.pychess.org/variants/hoppelpoppel)
-- [Shinobi](https://www.pychess.org/variants/shinobi)
-- [Empire Chess](https://www.pychess.org/variants/empire)
-- [Orda Mirror](https://www.pychess.org/variants/ordamirror)
-- [S-house (S-chess+Crazyhouse)](https://www.pychess.org/variants/shouse)
-- [Capahouse (Capablanca+Crazyhouse)](https://www.pychess.org/variants/capahouse)
-- [Grandhouse (Grand chess+Crazyhouse)](https://www.pychess.org/variants/grandhouse)
-- [Standard chess](https://www.pychess.org/variants/chess)
+The repository contain the whole pychess-variants project, which is a whole chess server,
+with login, server-side chess, and much more.
 
-Additionally you can check Chess960 option in for Standard, Crazyhouse, Atomic, S-chess, Capablanca and Capahouse to start games from random positions with 
-[Chess960 castling rules](https://en.wikipedia.org/wiki/Chess960#Castling_rules)
+## Usage
 
-For move generation, validation, analysis and engine play it uses
-- [Fairy-Stockfish](https://github.com/ianfab/Fairy-Stockfish)
-- [fairyfishnet](https://github.com/gbtami/fairyfishnet) fork of [fishnet](https://github.com/niklasf/fishnet)
-- [lichess-bot-variants](https://github.com/gbtami/lichess-bot-variants) fork of [lichess-bot](https://github.com/careless25/lichess-bot)
+Open [https://bmacho.github.io/online-bughouse-stockfish/analysis.html](https://bmacho.github.io/online-bughouse-stockfish/analysis.html) with ?fen=FEN as a query parameter. 
+- E.g. [https://bmacho.github.io/online-bughouse-stockfish/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR\[p\] w KQkq](https://bmacho.github.io/online-bughouse-stockfish/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%5Bp%5D%20w%20KQkq)
+
+
+## Components
+
+For move generation, validation, analysis it uses
+- [[ffish.js]](https://github.com/ianfab/Fairy-Stockfish/tree/master/tests/js#readme) [(npm)](https://www.npmjs.com/package/ffish)
+- [[stockfish.wasm]](https://github.com/niklasf/stockfish.wasm) [(npm)](https://npmjs.com/package/stockfish.wasm)
 
 On client side it is based on
-[chessgroundx](https://github.com/gbtami/chessgroundx) fork of [chessground](https://github.com/ornicar/chessground)
+[chessgroundx](https://github.com/gbtami/chessgroundx) fork of [chessground](https://github.com/ornicar/chessground).
 
-##
-
-As you know, pychess-variants is a free server and it will remain free forever. However, maintaining and improving the server costs time and money.
-
-If you like our work and find our server useful, please donate through [patreon](https://www.patreon.com/pychess) or directly through [paypal](https://www.paypal.me/gbtami)!!
-Your contribution will be greatly appreciated and help me continue to develop this awesome server.
+To bypass browser header restrictions, it uses [coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker).
 
 ## Installation
 
@@ -66,9 +33,9 @@ Your contribution will be greatly appreciated and help me continue to develop th
 
 ### Project setup
 ```
-pip3 install -r requirements.txt --user
-yarn install
-yarn dev
+pip3 install -r requirements.txt --user;
+yarn install;
+yarn dev;
 ```
 
 For MacOS, replace the last command with:
@@ -80,3 +47,11 @@ yarn dev-mac
 ```
 python3 server/server.py
 ```
+
+### analysis.html
+
+Then you save the output of localhost:8080/analysis/crazyhouse, and save it as html. If you can't change the headers you should put the coi-serviceworker script into it. 
+
+## Licence 
+
+My work and gbtami's work is under AGPL-3, the components may use more permissive licences.
