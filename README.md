@@ -50,7 +50,8 @@ python3 server/server.py
 
 ### analysis.html
 
-Then you save the output of localhost:8080/analysis/crazyhouse, and save it as html. If you can't change the headers you should put the coi-serviceworker script into it. 
+Then you open the output of localhost:8080/analysis/crazyhouse, save it as html, and do some magic with the absolute paths. 
+Also if you can't change the headers you should put the coi-serviceworker script into it. 
 
 ## Licence 
 
