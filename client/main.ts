@@ -28,9 +28,9 @@ import { renderTimeago } from './datetime';
 import { zenButtonView, zenModeSettings } from './zen';
 
 // redirect to correct URL except Heroku preview apps
-if (window.location.href.includes('heroku') && !window.location.href.includes('-pr-')) {
-    window.location.assign('https://www.pychess.org/');
-}
+//~ if (window.location.href.includes('heroku') && !window.location.href.includes('-pr-')) {
+    //~ window.location.assign('https://www.pychess.org/');
+//~ }
 
 export const model = {};
 
