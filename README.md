@@ -1,4 +1,4 @@
-## Online Bughouse Stockfish
+## Online Drophouse Stockfish Src
 
 This project is a modified version of gbtami/pychess-variants analyis board,
 so it can analyse bughouse positions. (I just replaced "crazyhouse" with "bughouse", and removed the part when it puts the taken pieces into hands.)
@@ -10,8 +10,8 @@ with login, server-side chess, and much more.
 
 ## Usage
 
-Open [https://bmacho.github.io/online-bughouse-stockfish/analysis.html](https://bmacho.github.io/online-bughouse-stockfish/analysis.html) with ?fen=FEN as a query parameter. 
-- E.g. [https://bmacho.github.io/online-bughouse-stockfish/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR\[p\] w KQkq](https://bmacho.github.io/online-bughouse-stockfish/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%5Bp%5D%20w%20KQkq)
+Open [https://online-drophouse-stockfish.herokuapp.com/analysis.html](https://online-drophouse-stockfish.herokuapp.com/analysis.html) with ?fen=FEN as a query parameter. 
+- E.g. [https://online-drophouse-stockfish.herokuapp.com/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR\[p\] w KQkq](https://online-drophouse-stockfish.herokuapp.com/analysis.html?fen=rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR%5Bp%5D%20w%20KQkq)
 
 
 ## Components
@@ -22,8 +22,6 @@ For move generation, validation, analysis it uses
 
 On client side it is based on
 [chessgroundx](https://github.com/gbtami/chessgroundx) fork of [chessground](https://github.com/ornicar/chessground).
-
-To bypass browser header restrictions, it uses [coi-serviceworker](https://github.com/gzuidhof/coi-serviceworker).
 
 ## Installation
 
@@ -50,8 +48,11 @@ python3 server/server.py
 
 ### analysis.html
 
-Then you open the output of localhost:8080/analysis/crazyhouse, save it as html, and do some magic with the absolute paths. 
-Also if you can't change the headers you should put the coi-serviceworker script into it. 
+Then you open the output of localhost:8080/analysis/crazyhouse, save it as html, and maybe do some magic with the absolute paths. 
+
+Also you should append some special https headers or the browsers will refuse to open wasm. 
+
+See my heroku repo: [https://github.com/bmacho/online-drophouse-stockfish](https://github.com/bmacho/online-drophouse-stockfish)
 
 ## Licence 
 
