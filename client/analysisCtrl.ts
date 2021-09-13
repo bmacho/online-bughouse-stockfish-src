@@ -175,6 +175,7 @@ export default class AnalysisController {
         this.variant = VARIANTS[model["variant"]];
         this.chess960 = model["chess960"] === 'True';
         this.fullfen = model["fen"] as string;
+        window["fenbackup"] = model["fen"] as string;
         this.wplayer = model["wplayer"] as string;
         this.bplayer = model["bplayer"] as string;
         this.base = model["base"] as number;
@@ -905,83 +906,182 @@ export default class AnalysisController {
         return moves.join(' ');
     }
 
+
+	
+
+
     sendMove = (orig, dest, promo) => {
-        const move = cg2uci(orig + dest + promo);
-        const san = this.ffishBoard.sanMove(move, this.notationAsObject);
-        const sanSAN = this.ffishBoard.sanMove(move);
-        // console.log('sendMove()', move, san);
-        // Instead of sending moves to the server we can get new FEN and dests from ffishjs
-        this.ffishBoard.push(move);
-        this.dests = this.getDests();
+		
+		const log = (s) => {
 
-        // We can't use ffishBoard.gamePly() to determine newply because it returns +1 more
-        // when new this.ffish.Board() initial FEN moving color was "b"
-        const moves = this.ffishBoard.moveStack().split(' ');
-        const newPly = moves.length;
+		console.error(s)
+	
+		}	
+		
+		if (window["fenbackup"].split(" ")[1] === "w") {
+			
+			// first move was white's
 
-        const msg = {
-            gameId: this.gameId,
-            fen: this.ffishBoard.fen(),
-            ply: newPly,
-            lastMove: move,
-            dests: this.dests,
-            promo: this.promotions,
-            bikjang: this.ffishBoard.isBikjang(),
-            check: this.ffishBoard.isCheck(),
-        }
-        this.onMsgAnalysisBoard(msg);
+			const move = cg2uci(orig + dest + promo);
+			const san = this.ffishBoard.sanMove(move, this.notationAsObject);
+			const sanSAN = this.ffishBoard.sanMove(move);
+			// console.log('sendMove()', move, san);
+			// Instead of sending moves to the server we can get new FEN and dests from ffishjs
+			this.ffishBoard.push(move);
+			this.dests = this.getDests();
 
-        const step = {
-            'fen': msg.fen,
-            'move': msg.lastMove,
-            'check': msg.check,
-            'turnColor': this.turnColor,
-            'san': san,
-            'sanSAN': sanSAN,
-            };
+			// We can't use ffishBoard.gamePly() to determine newply because it returns +1 more
+			// when new this.ffish.Board() initial FEN moving color was "b"
+			const moves = this.ffishBoard.moveStack().split(' ');
+			const newPly = moves.length;
 
-        // New main line move
-        if (newPly === this.steps.length && this.plyVari === 0) {
-            this.steps.push(step);
-            this.ply = newPly
-            updateMovelist(this);
+			const msg = {
+				gameId: this.gameId,
+				fen: this.ffishBoard.fen(),
+				ply: newPly,
+				lastMove: move,
+				dests: this.dests,
+				promo: this.promotions,
+				bikjang: this.ffishBoard.isBikjang(),
+				check: this.ffishBoard.isCheck(),
+			}
+			this.onMsgAnalysisBoard(msg);
 
-            this.checkStatus(msg);
-        // variation move
-        } else {
-            // new variation starts
-            if (newPly === 1) {
-                if (msg.lastMove === this.steps[this.ply].move) {
-                    // existing main line played
-                    selectMove(this, this.ply);
-                    return;
-                }
-                if (this.steps[this.plyVari]['vari'] === undefined || msg.ply === this.steps[this.plyVari]['vari'].length) {
-                    // continuing the variation
-                    this.plyVari = newPly;
-                    this.steps[this.plyVari]['vari'] = [];
-                } else {
-                    // variation in the variation: drop old moves
-                    this.steps[this.plyVari]['vari'] = this.steps[this.plyVari]['vari'].slice(0, newPly - this.plyVari);    
-                }
-            }
-            this.steps[this.plyVari]['vari'].push(step);
+			const step = {
+				'fen': msg.fen,
+				'move': msg.lastMove,
+				'check': msg.check,
+				'turnColor': this.turnColor,
+				'san': san,
+				'sanSAN': sanSAN,
+				};
 
-            const full = true;
-            const activate = false;
-            updateMovelist(this, full, activate);
-            activatePlyVari(this.plyVari + this.steps[this.plyVari]['vari'].length - 1);
-        }
+			// New main line move
+			if (this.ffishBoard.gamePly() === this.steps.length && this.plyVari === 0) {
+				this.steps.push(step);
+				this.ply = this.ffishBoard.gamePly()
+				updateMovelist(this);
 
-        const e = document.getElementById('fullfen') as HTMLInputElement;
-        e.value = this.fullfen;
+				this.checkStatus(msg);
+			// variation move
+			} else {
+				// new variation starts
+				if (newPly === 1) {
+					if (msg.lastMove === this.steps[this.ply].move) {
+						// existing main line played
+						selectMove(this, this.ply);
+						return;
+					}
+					if (this.steps[this.plyVari]['vari'] === undefined || msg.ply === this.steps[this.plyVari]['vari'].length) {
+						// continuing the variation
+						this.plyVari = this.ffishBoard.gamePly();
+						this.steps[this.plyVari]['vari'] = [];
+					} else {
+						// variation in the variation: drop old moves
+						this.steps[this.plyVari]['vari'] = this.steps[this.plyVari]['vari'].slice(0, this.ffishBoard.gamePly() - this.plyVari);    
+					}
+				}
+				this.steps[this.plyVari]['vari'].push(step);
 
-        if (this.isAnalysisBoard) {
-            const idxInVari = (this.plyVari > 0) ? this.steps[this.plyVari]['vari'].length - 1 : 0;
-            this.vpgn = patch(this.vpgn, h('textarea#pgntext', { attrs: { rows: 13, readonly: true, spellcheck: false} }, this.getPgn(idxInVari)));
-        }
-        // TODO: But sending moves to the server will be useful to implement shared live analysis!
-        // this.doSend({ type: "analysis_move", gameId: this.gameId, move: move, fen: this.fullfen, ply: this.ply + 1 });
+				const full = true;
+				const activate = false;
+				updateMovelist(this, full, activate);
+				activatePlyVari(this.plyVari + this.steps[this.plyVari]['vari'].length - 1);
+			}
+
+			const e = document.getElementById('fullfen') as HTMLInputElement;
+			e.value = this.fullfen;
+
+			if (this.isAnalysisBoard) {
+				const idxInVari = (this.plyVari > 0) ? this.steps[this.plyVari]['vari'].length - 1 : 0;
+				this.vpgn = patch(this.vpgn, h('textarea#pgntext', { attrs: { rows: 13, readonly: true, spellcheck: false} }, this.getPgn(idxInVari)));
+			}
+			// TODO: But sending moves to the server will be useful to implement shared live analysis!
+			// this.doSend({ type: "analysis_move", gameId: this.gameId, move: move, fen: this.fullfen, ply: this.ply + 1 });
+			
+		} else {
+			
+			// first move was black's
+				
+			const move = cg2uci(orig + dest + promo);
+			const san = this.ffishBoard.sanMove(move, this.notationAsObject);
+			const sanSAN = this.ffishBoard.sanMove(move);
+			// console.log('sendMove()', move, san);
+			// Instead of sending moves to the server we can get new FEN and dests from ffishjs
+			this.ffishBoard.push(move);
+			this.dests = this.getDests();
+
+			// We can't use ffishBoard.gamePly() to determine newply because it returns +1 more
+			// when new this.ffish.Board() initial FEN moving color was "b"
+			const moves = this.ffishBoard.moveStack().split(' ');
+			const newPly = moves.length;
+
+			const msg = {
+				gameId: this.gameId,
+				fen: this.ffishBoard.fen(),
+				ply: newPly,
+				lastMove: move,
+				dests: this.dests,
+				promo: this.promotions,
+				bikjang: this.ffishBoard.isBikjang(),
+				check: this.ffishBoard.isCheck(),
+			}
+			this.onMsgAnalysisBoard(msg);
+
+			const step = {
+				'fen': msg.fen,
+				'move': msg.lastMove,
+				'check': msg.check,
+				'turnColor': this.turnColor,
+				'san': san,
+				'sanSAN': sanSAN,
+				};
+
+			// New main line move
+			if (newPly === this.steps.length && this.plyVari === 0) {
+				this.steps.push(step);
+				this.ply = newPly
+				updateMovelist(this);
+
+				this.checkStatus(msg);
+			// variation move
+			} else {
+				// new variation starts
+				if (newPly === 1) {
+					if (msg.lastMove === this.steps[this.ply].move) {
+						// existing main line played
+						selectMove(this, this.ply);
+						return;
+					}
+					if (this.steps[this.plyVari]['vari'] === undefined || msg.ply === this.steps[this.plyVari]['vari'].length) {
+						// continuing the variation
+						this.plyVari = newPly;
+						this.steps[this.plyVari]['vari'] = [];
+					} else {
+						// variation in the variation: drop old moves
+						this.steps[this.plyVari]['vari'] = this.steps[this.plyVari]['vari'].slice(0, newPly - this.plyVari);    
+					}
+				}
+				this.steps[this.plyVari]['vari'].push(step);
+
+				const full = true;
+				const activate = false;
+				updateMovelist(this, full, activate);
+				activatePlyVari(this.plyVari + this.steps[this.plyVari]['vari'].length - 1);
+			}
+
+			const e = document.getElementById('fullfen') as HTMLInputElement;
+			e.value = this.fullfen;
+
+			if (this.isAnalysisBoard) {
+				const idxInVari = (this.plyVari > 0) ? this.steps[this.plyVari]['vari'].length - 1 : 0;
+				this.vpgn = patch(this.vpgn, h('textarea#pgntext', { attrs: { rows: 13, readonly: true, spellcheck: false} }, this.getPgn(idxInVari)));
+			}
+			// TODO: But sending moves to the server will be useful to implement shared live analysis!
+			// this.doSend({ type: "analysis_move", gameId: this.gameId, move: move, fen: this.fullfen, ply: this.ply + 1 });
+			
+		}
+        
     }
 
     private onMsgAnalysisBoard = (msg) => {
