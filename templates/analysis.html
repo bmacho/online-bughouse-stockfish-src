@@ -4,13 +4,10 @@
 {% endblock %}
 {% block js %}
 
-<!--
-hide the sidebar, top bar, textarea
--->
+<!-- hide the sidebar, top bar, textarea -->
 <style>
-	#main-wrap > div > aside {display: none}
-	#pgn > div:nth-child(4) {display: none}
-	#pgn > div:nth-child(5) {display: none}
+	#main-wrap > div > aside {display: none}    /* hide sidebar */ 
+	#pgn > div:nth-child(5) /* hide textarea and some buttons below the board */ 
 </style>
 
 <!--
