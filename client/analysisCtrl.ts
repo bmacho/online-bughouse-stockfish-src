@@ -185,7 +185,7 @@ export default class AnalysisController {
         this.pgn = "";
         this.ply = 0;
 
-        this.flip = false;
+        this.flip = (window["flipped"]) ? true : false ;
         this.settings = true;
         this.animation = localStorage.animation === undefined ? true : localStorage.animation === "true";
         this.showDests = localStorage.showDests === undefined ? true : localStorage.showDests === "true";
@@ -245,7 +245,7 @@ export default class AnalysisController {
             chess960: this.chess960,
             geometry: this.variant.geometry,
             notation: this.notation,
-            orientation: this.mycolor,
+            orientation: (this.flip) ? "black" : "white", 
             turnColor: this.turnColor,
             animation: { enabled: this.animation },
         });

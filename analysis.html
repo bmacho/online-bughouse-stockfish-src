@@ -1,58 +1,43 @@
-<html> <head>
-	
-	<script src="./coi-serviceworker.js"></script>
 
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#dbd7d1"><title>Online Bughouse Stockfish</title><link rel="stylesheet" href="static/chessground.css">
-<!--
-	<link rel="stylesheet" href="static/board.css" crossorigin="anonymous"> 
--->
-	<style>.standard8x8 .cg-wrap {
-    background-image: url('static/images/board/8x8brown.svg');
-	}</style> 
-	<link rel="stylesheet" href="static/piece/standard/empty.css"><!--
-        <link rel="stylesheet" href=static/piece/seirawan/empty.css>
-        <link rel="stylesheet" href=static/piece/makruk/empty.css>
-        <link rel="stylesheet" href=static/piece/sittuyin/empty.css>
-        <link rel="stylesheet" href=static/piece/shogi/empty.css>
-        <link rel="stylesheet" href=static/piece/kyoto/empty.css>
-        <link rel="stylesheet" href=static/piece/tori/empty.css>
-        <link rel="stylesheet" href=static/piece/xiangqi/empty.css>
-        <link rel="stylesheet" href=static/piece/capa/empty.css>
-        <link rel="stylesheet" href=static/piece/shako/empty.css>
-        <link rel="stylesheet" href=static/piece/shogun/empty.css>
-        <link rel="stylesheet" href=static/piece/janggi/empty.css>
-        <link rel="stylesheet" href=static/piece/orda/empty.css>
-        <link rel="stylesheet" href=static/piece/synochess/empty.css>
-        <link rel="stylesheet" href=static/piece/hoppel/empty.css>
-        <link rel="stylesheet" href=static/piece/dobutsu/empty.css>
-        <link rel="stylesheet" href=static/piece/shinobi/empty.css>
-        <link rel="stylesheet" href=static/piece/empire/empty.css>
-        <link rel="stylesheet" href=static/piece/ordamirror/empty.css>
---><link rel="stylesheet" href="static/extensions.css"><link rel="stylesheet" href="static/style.css"><link rel="stylesheet" href="static/preview.css"><!--
+<html> <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#dbd7d1"><title>Online Drophouse Stockfish</title><link rel="stylesheet" href="/static/chessground.css"><link rel="stylesheet" href="/static/board.css" crossorigin="anonymous"><link rel="stylesheet" href="/static/piece/standard/empty.css"><!--
+        <link rel="stylesheet" href=/static/piece/seirawan/empty.css>
+        <link rel="stylesheet" href=/static/piece/makruk/empty.css>
+        <link rel="stylesheet" href=/static/piece/sittuyin/empty.css>
+        <link rel="stylesheet" href=/static/piece/shogi/empty.css>
+        <link rel="stylesheet" href=/static/piece/kyoto/empty.css>
+        <link rel="stylesheet" href=/static/piece/tori/empty.css>
+        <link rel="stylesheet" href=/static/piece/xiangqi/empty.css>
+        <link rel="stylesheet" href=/static/piece/capa/empty.css>
+        <link rel="stylesheet" href=/static/piece/shako/empty.css>
+        <link rel="stylesheet" href=/static/piece/shogun/empty.css>
+        <link rel="stylesheet" href=/static/piece/janggi/empty.css>
+        <link rel="stylesheet" href=/static/piece/orda/empty.css>
+        <link rel="stylesheet" href=/static/piece/synochess/empty.css>
+        <link rel="stylesheet" href=/static/piece/hoppel/empty.css>
+        <link rel="stylesheet" href=/static/piece/dobutsu/empty.css>
+        <link rel="stylesheet" href=/static/piece/shinobi/empty.css>
+        <link rel="stylesheet" href=/static/piece/empire/empty.css>
+        <link rel="stylesheet" href=/static/piece/ordamirror/empty.css>
+--><link rel="stylesheet" href="/static/extensions.css"><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/preview.css"><!--
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
---><link rel="stylesheet" href="static/site.css"><link rel="stylesheet" href="static/reconnecting.css"><link rel="stylesheet" href="static/analysis.css"><link rel="icon" href="static/favicon/favicon.ico" type="image/x-icon"></head> <!--
+--><link rel="stylesheet" href="/static/site.css"><link rel="stylesheet" href="/static/reconnecting.css"><link rel="stylesheet" href="/static/analysis.css"><link rel="icon" href="/static/favicon/favicon.ico" type="image/x-icon"></head> <!--
     <div id="preload">
-        <img src=static/images/board/makruk2.svg/>
-        <img src=static/images/board/sittuyin.svg/>
-        <img src=static/images/board/8x8brown.svg/>
-        <img src=static/images/board/10x8brown.svg/>
-        <img src=static/images/board/10x10brown.svg/>
-        <img src=static/images/board/xiangqi.svg/>
-        <img src=static/images/board/JanggiBrown.svg/>
-        <img src=static/images/board/minixiangqi.svg/>
-        <img src=static/images/board/shogi.svg/>
-        <img src=static/images/board/minishogi.svg/>
-        <img src=static/images/board/doubutsuboard.svg/>
-        <img src=static/images/board/Grandboard.svg/>
-        <img src=static/images/board/ShogunPlain.svg/>
+        <img src=/static/images/board/makruk2.svg/>
+        <img src=/static/images/board/sittuyin.svg/>
+        <img src=/static/images/board/8x8brown.svg/>
+        <img src=/static/images/board/10x8brown.svg/>
+        <img src=/static/images/board/10x10brown.svg/>
+        <img src=/static/images/board/xiangqi.svg/>
+        <img src=/static/images/board/JanggiBrown.svg/>
+        <img src=/static/images/board/minixiangqi.svg/>
+        <img src=/static/images/board/shogi.svg/>
+        <img src=/static/images/board/minishogi.svg/>
+        <img src=/static/images/board/doubutsuboard.svg/>
+        <img src=/static/images/board/Grandboard.svg/>
+        <img src=/static/images/board/ShogunPlain.svg/>
     </div>
-
---> 
-
-
-<body id="pychess-variants" style="--cgwrapwidth: 600px; --cgwrapheight: 800px; --zoom:80;" data-view="analysis" data-asset-url="static" data-lang="en" data-home="http://127.0.0.1:8080" data-user="Anon" data-anon="True" data-country data-gameid data-tournamentid data-tournamentname data-inviter data-ply data-date data-result data-status data-profile data-title="Online Bughouse Stockfish" data-variant="crazyhouse" data-chess960 data-rated data-level data-wplayer data-wtitle data-wrating data-wrdiff data-bplayer data-btitle data-brating data-brdiff data-fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR[] w KQkq - 0 1" data-base data-inc data-byo> <div id="placeholder"></div> </body> <!--
+--> <body id="pychess-variants" style="--cgwrapwidth: 600px; --cgwrapheight: 800px; --zoom:80;" data-view="analysis" data-asset-url="/static" data-lang="en" data-home="http://127.0.0.1:8080" data-user="Anon" data-anon="True" data-country data-gameid data-tournamentid data-tournamentname data-inviter data-ply data-date data-result data-status data-profile data-title="Online Drophouse Stockfish" data-variant="crazyhouse" data-chess960 data-rated data-level data-wplayer data-wtitle data-wrating data-wrdiff data-bplayer data-btitle data-brating data-brdiff data-fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR[] w KQkq - 0 1" data-base data-inc data-byo> <div id="placeholder"></div> </body> <!--
         
     <header>
         <a id="zen-button"></a>
@@ -78,7 +63,7 @@
             </div>
         </div>
         <div class="site-buttons">
-            <div id="username"><a class="user-link" href="/@/Anon-Q1NzN3y8">Anon-Q1NzN3y8</a></div>
+            <div id="username"><a class="user-link" href="/@/Anon-ptXZir6Z">Anon-ptXZir6Z</a></div>
             
             <a class="login nav-link" href="/login" title="Login with Lichess">Log in</a>
             
@@ -101,7 +86,9 @@ if there is a ?fen= in the url, we use that
 	var fen_in_url = searchParams.get('fen')
 	var default_fen = "Rn1qkbr1/pp2p2p/5n2/2pp1b2/P7/3PPP2/1PP1NN2/RNBQKB1R[Qbbnnppp] w KQ - 0 1"
 	document.body.dataset.fen = ( fen_in_url ) ? fen_in_url : default_fen
-</script> <script src="static/pychess-variants.js"></script> <script src="static/stockfish.js"></script> <script>
+	
+	window.flipped = ( searchParams.get('flip') == "true" || searchParams.get('flip') == "1" ) ? true : false
+</script> <script src="/static/pychess-variants.js"></script> <script src="/static/stockfish.js"></script> <script>
     function wasmThreadsSupported() {
         // WebAssembly 1.0
         const source = Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00);
