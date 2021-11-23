@@ -10,6 +10,74 @@ if there is a ?fen= in the url, we use that
 	document.body.dataset.fen = ( fen_in_url ) ? fen_in_url : default_fen
 	
 	window.flipped = ( searchParams.get('flip') == "true" || searchParams.get('flip') == "1" ) ? true : false
+
+</script> <script>
+
+	// short to click buttons
+	
+
+	document.addEventListener('keydown', function( e ){
+		
+		if (e.key === "l") {
+			if (localAnalyseSwitch === undefined) {
+				var localAnalyseSwitch	= document.querySelector("input[name$='engine']");
+			}
+
+			localAnalyseSwitch.click();
+		}  
+
+		if (e.key === "f" || e.key === " ") { 
+			e.preventDefault();
+			if (flipBtn === undefined) {
+				var buttonBar			= document.querySelector("div#btn-controls-top");
+				var flipBtn 			= buttonBar.children[0];
+			}
+			
+			flipBtn.click();
+		}  
+
+		if (e.key === "k" || e.key === "ArrowLeft") { 
+			e.preventDefault();
+			if (leftBtn === undefined) {
+				var buttonBar			= document.querySelector("div#btn-controls-top");
+				var leftBtn 			= buttonBar.children[2];
+			}
+			
+			leftBtn.click();
+		}  
+
+		if (e.key === "j" || e.key === "ArrowRight") { 
+			e.preventDefault();
+			if (rightBtn === undefined) {
+				var buttonBar			= document.querySelector("div#btn-controls-top");
+				var rightBtn 			= buttonBar.children[3];
+			}
+			
+			rightBtn.click();
+		}  
+
+		if (e.key === "ArrowUp") {
+			e.preventDefault(); 
+			if (startBtn === undefined) {
+				var buttonBar			= document.querySelector("div#btn-controls-top");
+				var startBtn 			= buttonBar.children[1];
+			}
+			
+			startBtn.click();
+		}  
+
+		if (e.key === "ArrowDown") { 
+			e.preventDefault();
+			if (endBtn === undefined) {
+				var buttonBar			= document.querySelector("div#btn-controls-top");
+				var endBtn 				= buttonBar.children[4];
+			}
+			
+			endBtn.click();
+		}  
+
+	});
+	
 </script> <script src="/static/pychess-variants.js"></script> <script src="/static/stockfish.js"></script> <script>
     function wasmThreadsSupported() {
         // WebAssembly 1.0
